@@ -49,7 +49,7 @@ async function run() {
 
     app.get('/book/:id', async (req, res) => {
       const id = req.params.id;
-
+      // const query = {_id: new ObjectId(id)};
       const result = await booksCollection.findOne({
         _id: ObjectId(id)
       });
@@ -57,64 +57,64 @@ async function run() {
       res.send(result);
     });
 
-    app.delete('/book/:id', async (req, res) => {
-      const id = req.params.id;
+    // app.delete('/book/:id', async (req, res) => {
+    //   const id = req.params.id;
 
-      const result = await booksCollection.deleteOne({
-        _id: ObjectId(id)
-      });
-      console.log(result);
-      res.send(result);
-    });
+    //   const result = await booksCollection.deleteOne({
+    //     _id: ObjectId(id)
+    //   });
+    //   console.log(result);
+    //   res.send(result);
+    // });
 
-    app.post('/comment/:id', async (req, res) => {
-      const bookId = req.params.id;
-      const comment = req.body.comment;
-      console.log(bookId);
-      console.log(comment);
+    // app.post('/comment/:id', async (req, res) => {
+    //   const bookId = req.params.id;
+    //   const comment = req.body.comment;
+    //   console.log(bookId);
+    //   console.log(comment);
 
-      const result = await booksCollection.updateOne({
-        _id: new ObjectId(bookId)
-      }, {
-        $push: {
-          comments: comment
-        }
-      });
+    //   const result = await booksCollection.updateOne({
+    //     _id: new ObjectId(bookId)
+    //   }, {
+    //     $push: {
+    //       comments: comment
+    //     }
+    //   });
 
-      if (result.modifiedCount !== 1) {
-        console.error('Product not found or comment not added');
-        res.json({
-          error: 'Product not found or comment not added'
-        });
-        return;
-      }
+    //   if (result.modifiedCount !== 1) {
+    //     console.error('Product not found or comment not added');
+    //     res.json({
+    //       error: 'Product not found or comment not added'
+    //     });
+    //     return;
+    //   }
 
-      console.log('Comment added successfully');
-      res.json({
-        message: 'Comment added successfully'
-      });
-    });
+    //   console.log('Comment added successfully');
+    //   res.json({
+    //     message: 'Comment added successfully'
+    //   });
+    // });
 
-    app.get('/comment/:id', async (req, res) => {
-      const bookId = req.params.id;
+    // app.get('/comment/:id', async (req, res) => {
+    //   const bookId = req.params.id;
 
-      const result = await booksCollection.findOne({
-        _id: ObjectId(bookId)
-      }, {
-        projection: {
-          _id: 0,
-          comments: 1
-        }
-      });
+    //   const result = await booksCollection.findOne({
+    //     _id: ObjectId(bookId)
+    //   }, {
+    //     projection: {
+    //       _id: 0,
+    //       comments: 1
+    //     }
+    //   });
 
-      if (result) {
-        res.json(result);
-      } else {
-        res.status(404).json({
-          error: 'Product not found'
-        });
-      }
-    });
+    //   if (result) {
+    //     res.json(result);
+    //   } else {
+    //     res.status(404).json({
+    //       error: 'Product not found'
+    //     });
+    //   }
+    // });
 
   } finally {
 
